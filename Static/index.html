@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Skin Lesion Classifier</title>
+    <link rel="stylesheet" href="/static/styles.css">
+    <link rel="icon" href="/static/favicon.ico">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.development.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.development.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.2/babel.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script type="text/babel">
+        function App() {
+        const [stats, setStats] = React.useState(null)
+        
+        React.useEffect(() => {
+            fetch("/dashboard/stats")
+            .then(res => res.json())
+            .then(data => setStats(data))
+        }, [])
+
+
+        if (!stats) return <p>Loading...</p>
+
+        return (
+            <div>
+                <table>
+                    <thead>
+                        <tr>
+                        <th>File</th>
+                        <th>Prediction</th>
+                        <th>Confidence</th>
+                        <th>Time</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {stats.recent.map((row, i) => (
+                        <tr key={i}>
+                            <td>{row[1]}</td>
+                            <td>{row[2]}</td>
+                            <td>{(row[3] * 100).toFixed(1)}%</td>
+                            <td>{row[4]}</td>
+                        </tr>
+                        ))}
+                    </tbody>
+                </table>
+
+                <p>Average Confidence: {stats.avg_confidence}%</p>
+                
+                <canvas id="donutChart" width="300" height="300"></canvas>
+
+            </div>
+        )
+    }
+    const root = ReactDOM.createRoot(document.getElementById("root"))
+    root.render(<App />)
+  </script>
+</body>
+</html>

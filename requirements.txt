@@ -6,3 +6,4 @@ ultralytics
 numpy
 pandas
 scikit-learn
+aiofiles

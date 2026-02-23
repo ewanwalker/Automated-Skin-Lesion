@@ -5,7 +5,7 @@ Starting the server
 
 cd your-file-path/Automated-Skin-Lesion
 
-uvicorn main:app --reload
+python main.py
 
 
 Step 2:

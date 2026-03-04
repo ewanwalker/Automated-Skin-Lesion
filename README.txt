@@ -11,6 +11,4 @@ python main.py
 Step 2:
 Calling the api
 
-cd your-file-path/Automated-Skin-Lesion/dataset/val/benign
-
-curl -X POST http://localhost:8000/images \ -F "file=@ISIC_0013140.jpg"
+curl -X POST http://localhost:8000/images \ -F "file=@path-to-image"
